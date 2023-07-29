@@ -21,17 +21,34 @@ func main() {
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path != "/" {
+	logRequest(r)
+	if r.URL.Path == "/" {
+		_, err := fmt.Fprint(w, "home page")
+		if err != nil {
+			logError(err, r.URL.Path)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+	} else if r.URL.Path == "/test" {
+		_, err := fmt.Fprint(w, "test page")
+		if err != nil {
+			logError(err, r.URL.Path)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+	} else if r.URL.Path == "/BinaryAddition" {
+		mockJson := "{}"
+		log.Printf(mockJson)
+	} else {
 		http.NotFound(w, r)
 		return
 	}
+}
 
-	if r.URL.Path == "/test" {
+func logError(err error, path string) {
+	log.Printf("error occurred when accessing path: %s Message: %s}", path, err)
+}
 
-	}
-
-	_, err := fmt.Fprint(w, "Hello, World!")
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-	}
+func logRequest(r *http.Request) {
+	log.Printf("URL Path: %s", r.URL.Path)
 }
