@@ -52,7 +52,7 @@ func RealController(w http.ResponseWriter, r *http.Request) {
 	}
 	key1 := r.Form.Get("key1")
 	key2 := r.Form.Get("key2")
-	log.Printf(key1, key2)
+	log.Printf("key1:%s  key2:%s", key1, key2)
 }
 
 func logError(err error, path string) {
