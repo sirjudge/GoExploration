@@ -36,13 +36,23 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
-	} else if r.URL.Path == "/BinaryAddition" {
-		mockJson := "{}"
-		log.Printf(mockJson)
+	} else if r.URL.Path == "/RealController" {
+		RealController(w, r)
 	} else {
 		http.NotFound(w, r)
 		return
 	}
+}
+
+func RealController(w http.ResponseWriter, r *http.Request) {
+	err := r.ParseForm()
+	if err != nil {
+		logError(err, r.URL.Path)
+		return
+	}
+	key1 := r.Form.Get("key1")
+	key2 := r.Form.Get("key2")
+	log.Printf(key1, key2)
 }
 
 func logError(err error, path string) {
