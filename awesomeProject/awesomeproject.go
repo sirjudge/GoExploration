@@ -13,6 +13,7 @@ func main() {
 	if port == "" {
 		port = "8080"
 		log.Printf("Defaulting to port %s", port)
+		PrintString("this is a test")
 	}
 	printPortInfo(port)
 }
@@ -47,25 +48,10 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func RealController(w http.ResponseWriter, r *http.Request) {
-	err := r.ParseForm()
-	if err != nil {
-		logError(err, r)
-		return
-	}
-	key1 := r.Form.Get("key1")
-	key2 := r.Form.Get("key2")
-	log.Printf("key1:%s  key2:%s", key1, key2)
-}
-
 func logError(err error, r *http.Request) {
 	log.Printf("error occurred when accessing path: %s Message: %s}", r.URL.Path, err)
 }
 
 func logRequest(r *http.Request) {
 	log.Printf("URL Path: %s", r.URL.Path)
-}
-
-func GetRandomDogPhoto() {
-
 }
